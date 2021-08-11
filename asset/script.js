@@ -1,54 +1,78 @@
-var startscreen = document.getElementById("startscreen");
-var startquizBtn = document.getElementById("startquiz");
-var questionscreen = document.getElementById("questionscreen");
-var questiontext = document.getElementById("questiontext");
+var startScreen = document.getElementById("startscreen");
+var startQuizBtn = document.getElementById("startquiz");
+var questionScreen = document.getElementById("questionscreen");
+var questionText = document.getElementById("questiontext");
 var choicesEl = document.getElementById("choices");
-var endscreen = document.getElementById("endscreen");
-var endscore = document.getElementById("endscore");
+var endScreen = document.getElementById("endscreen");
+var endScore = document.getElementById("endscore");
 var initals = document.getElementById("initials");
 var submit = document.getElementById("submit");
 var timeEl = document.getElementById("time");
 var timerId;
 var currentQuestionIndex = 0;
 
-var questions = [
+var quizQuestions = [
     {
-        question:"",
-        choices:["Answers1", "2"],
-        answer:"answers"
+        question:"When does a player receive a red card on pitch?",
+        choices:["When a player commit a fault", "When a player receive a second yellow card", "When a player conduct an unprofessional conduct", "All of the above."],
+        answer:"All of the above"
     },
     {
-        question:"Fill in question",
-        choices:["Answers1", "2"],
-        answer:"answers"
+        question:"When is video assistant referee (VAR) used?",
+        choices:["When there a clear and obvious error from the referee", "When a player commit a fault", "When there is a penalty shout", "When an on pitch player request it"],
+        answer:"When there is a clear and obvious error from the referee"
+    },
+    {
+        question:"Which one is not a current European club tournament?",
+        choices:["Champions League", "Europa League", "European Conference League", "UEFA Cup"],
+        answer:"UEFA Cup"
+    },
+    {
+        question:"When was the last FIFA World Cup hosted?",
+        choices:["Russia", "Germany", "Brazil", "Chlie"],
+        answer:"Russian"
+    },
+    {
+        question:"Who was the winner of the 2014 FIFA World Cup in Brazil?",
+        choices:["Brazil", "Germany", "Argentina", "The Netherlands"],
+        answer:["Germany"]
     },
 ];
+console.log(quizQuestions);
 
-
-function startquiz(){
+function startQuiz(){
     //hide our startscreen
-    startscreen.setAttribute("class", "hide");
+    startScreen.setAttribute("class", "hide");
     //show our question screen
-    questionscreen.removeAttribute("class", "hide");
+    questionScreen.removeAttribute("class", "hide");
     //start timer
-    timeId = setInterval(timer,1000)
+    timeId = setInterval(timer,10000)
     timeEl.textContent= time 
     //call the next function
     getQuestion();
 }
 
+startQuizBtn.addEventListener("click", startquiz);
+
 function getQuestion() {
-    //set variable for ucrrent question
+    //set variable for current question
+    var currentQuestion(quizQuestions);
 // add question to the page
+
 //add the choices to the pages as buttons
+    quizQuestions.forEach(choices);
 //use .forEach method here
 //append to the page
-
-
-
+    document.append(questionScreen);
 }
 
 //user question click function
+function answerQuestion() {
+    if (quizQuestions.choices === quizQuestions.answer);
+        console.log("You're correct")
+} else if (quizQuestions.choices !=== quizQuestions.answer);
+        console.log("You're Wrong")
+};
     //check for right answer
     //subtract time for wrong answer
     //tell them if they're right or wrong
@@ -58,10 +82,21 @@ function getQuestion() {
 
 //end quiz function
         //similar to start quiz
+function endQuiz(){
+    endScreen.setAttribute("class", "hide");
 
+}
+
+
+
+function setTime() {
+    if(secondsLeft === 0) {
+        clearInterval(timeId);
+
+    }
+}
  //timer function
     //set the time
     //watch for timer to get below 0
 
 //highscore functions
-startquizBtn.addEventListener("click", startquiz);
