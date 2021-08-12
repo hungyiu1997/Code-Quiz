@@ -1,12 +1,12 @@
-var startScreen = document.getElementById("startscreen");
+var startScreenEl = document.getElementById("startscreen");
 var startQuizBtn = document.getElementById("startquiz");
-var questionScreen = document.getElementById("questionscreen");
-var questionText = document.getElementById("questiontext");
+var questionScreenEl = document.getElementById("questionscreen");
+var questionTextEl = document.getElementById("questiontext");
 var choicesEl = document.getElementById("choices");
-var endScreen = document.getElementById("endscreen");
-var endScore = document.getElementById("endscore");
-var initals = document.getElementById("initials");
-var submit = document.getElementById("submit");
+var endScreenEl = document.getElementById("endscreen");
+var endScoreEl = document.getElementById("endscore");
+var initalsEl = document.getElementById("initials");
+var submitEl = document.getElementById("submit");
 var timeEl = document.getElementById("time");
 var timerId;
 var currentQuestionIndex = 0;
@@ -47,7 +47,7 @@ function startQuiz(){
     questionScreen.removeAttribute("class", "hide");
     //start timer
     timeId = setInterval(timer,10000)
-    timeEl.textContent= time 
+    timeEl.textContent = secondsLeft
     //call the next function
     getQuestion();
 }
@@ -66,6 +66,7 @@ function getQuestion() {
     document.append(questionScreen);
 }
 
+
 //user question click function
 function answerQuestion() {
     if (quizQuestions.choices === quizQuestions.answer);
@@ -74,7 +75,6 @@ function answerQuestion() {
         console.log("You're Wrong")
 };
     //check for right answer
-    //subtract time for wrong answer
     //tell them if they're right or wrong
 
     //move on to next question
@@ -84,19 +84,37 @@ function answerQuestion() {
         //similar to start quiz
 function endQuiz(){
     endScreen.setAttribute("class", "hide");
-
+    
 }
 
 
 
 function setTime() {
-    if(secondsLeft === 0) {
-        clearInterval(timeId);
+    var timerInterval = setInterval(
+        function() {
+            secondsLeft--;
+            timeEl.textContent = secondsLeft + " seconds left!";
 
-    }
+            if(secondsLeft === 0) {
+                clearInterval(timerInterval);
+                sendMessage();
+            }
+        },
+        1000);
 }
+
+function sendMessage() {
+    timeEl.textContent= "You are out of time!"
+    return;
+
+}
+setTime();
  //timer function
     //set the time
     //watch for timer to get below 0
 
+var score = 0;
 //highscore functions
+
+    
+}
