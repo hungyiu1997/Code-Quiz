@@ -8,6 +8,7 @@ var endScore = document.getElementById("endscore");
 var initals = document.getElementById("initials");
 var submit = document.getElementById("submit");
 var timeEl = document.getElementById("time");
+var time = 60;
 var userChoice = "";
 var wins = 0;
 var losses = 0;
@@ -60,34 +61,23 @@ console.log(quizQuestions);
 
 function startQuiz() {
   console.log("startQuiz");
-  //hide our startscreen
   startScreenEl.setAttribute("class", "hide");
-  //show our question screen
   questionScreenEl.removeAttribute("class", "hide");
-  //start timer
-  // timeId = setInterval(timer,10000)
-  // timeEl.textContent= time
-  //call the next function
-  getNextQuestion();
-  
+  getQuestion();
+  startTimer();
 }
 
 startQuizBtn.addEventListener("click", startQuiz);
 
-
-function getNextQuestion () {
-    for (var i = 0; i < quizQuestions.length; i++) {
-        questionScreenEl.textContent = ""
-        // getQuestion();
-        // currentQuestionIndex++;
-    }
-}
-
 function getQuestion() {
-  //console.log the name
   console.log("getQuestion");
-  // set variable for current question
+  
+  choicesEl.innerHTML = "";
   var quizObj = quizQuestions[currentQuestionIndex];
+  console.log("==== Question #", currentQuestionIndex + 1, "======");
+  console.log(quizObj);
+  questionTextEl.textContent = quizObj.question;
+
   console.log(quizObj);
   questionTextEl.textContent = quizObj.question;
 
@@ -104,8 +94,6 @@ function getQuestion() {
   } 
 }
 
-//get
-
 function handleChoiceBtn(event) {
     var btnClickedEl = event.target;
     console.log(btnClickedEl);
@@ -116,46 +104,56 @@ function handleChoiceBtn(event) {
     if (quizObj.answer === btnClickedEl.textContent){
         wins++; 
         console.log(wins);
+    } else {
+      losses++;
+      time = time-10;
+      timeEl.textContent = time;
+      console.log("losses", losses);
     }
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex >= quizQuestions.length) {
+      scoreSummary();
+    } else {
+    getQuestion();
+  }
+}
+function scoreSummary () {
+  clearInterval(counter);
+  console.log("Game Over!");
+  questionScreenEl.setAttribute("class", "hide");
+  endScreen.removeAttribute("class", "hide");
+} 
+
+function startTimer() {
+  counter = setInterval(function() {
+    time--;
+    timeEl.textContent = time;
+    if (time<=0) {
+      scoreSummary();
+    }
+  },1000) 
 }
 
-document.addEventListener("click", handleChoiceBtn);
-// add question to the page
+document.getElementById('choices').addEventListener("click", handleChoiceBtn);
+submit.addEventListener("click", saveScore);
 
-//add the choices to the pages as buttons
-// quizQuestions.forEach(choices);
-//use .forEach method here
-//append to the page
-//     document.append(questionScreen);
+function saveScore () {
+  var initials = initialsEl.value
+  console.log(initials, time);
+  var score = `${initials} : ${time}`;
+  localStorage.setItem("Score", score);
+}
 
-//user question click function
-// function answerQuestion() {
-// if (quizQuestions.choices === quizQuestions.answer);
-// console.log("You're correct")
-// } else if (quizQuestions.choices !=== quizQuestions.answer);
-// console.log("You're Wrong")
-// };
-//check for right answer
-//tell them if they're right or wrong
+function displayHighScore () {
+  endScreen.setAttribute("class", "hide");
+  highScoreEl.removeAttribute("class", "hide");
+  var highScore = localStorage.getItem("Score");
+  highScore.textContent = score;
+}
+restartBtnEl.addEventListener("click", restartQuiz);
 
-//move on to next question
-
-//end quiz function
-//similar to start quiz
-// function endQuiz(){
-// endScreen.setAttribute("class", "hide");
-// questionScreen.removeAttribute("class", "hide");
-
-// }
-
-// function setTime() {
-// if(secondsLeft === 0) {
-//         clearInterval(timeId);
-
-//     }
-// }
-//timer function
-//set the time
-//watch for timer to get below 0
-
-//highscore functions
+function restartQuiz () {
+  highScoreEl.setAttribute("class", "hide");
+  questionScreenEl.removeAttribute("class", "hide");
+}
