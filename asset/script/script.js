@@ -156,4 +156,5 @@ restartBtnEl.addEventListener("click", restartQuiz);
 function restartQuiz () {
   highScoreEl.setAttribute("class", "hide");
   questionScreenEl.removeAttribute("class", "hide");
+  //
 }
