@@ -5,9 +5,13 @@ var questionTextEl = document.getElementById("question-text");
 var choicesEl = document.getElementById("choices");
 var endScreen = document.getElementById("endscreen");
 var endScore = document.getElementById("endscore");
-var initals = document.getElementById("initials");
+var initialsEl = document.getElementById("initials");
 var submit = document.getElementById("submit");
 var timeEl = document.getElementById("time");
+var highScoreBtn = document.querySelector("#highscore-btn");
+var highScoreEl = document.querySelector('#highscore-page');
+var highScorePEl = document.querySelector('#highscore');
+var restartBtnEl = document.querySelector("#restart-quiz");
 var time = 60;
 var userChoice = "";
 var wins = 0;
@@ -63,6 +67,8 @@ function startQuiz() {
   console.log("startQuiz");
   startScreenEl.setAttribute("class", "hide");
   questionScreenEl.removeAttribute("class", "hide");
+  currentQuestionIndex = 0;
+  time = 60;
   getQuestion();
   startTimer();
 }
@@ -143,18 +149,17 @@ function saveScore () {
   console.log(initials, time);
   var score = `${initials} : ${time}`;
   localStorage.setItem("Score", score);
+  displayHighScore();
 }
+
+highScoreBtn.addEventListener("click", displayHighScore);
 
 function displayHighScore () {
   endScreen.setAttribute("class", "hide");
   highScoreEl.removeAttribute("class", "hide");
   var highScore = localStorage.getItem("Score");
-  highScore.textContent = score;
+  highScorePEl.textContent = highScore;
+  
 }
-restartBtnEl.addEventListener("click", restartQuiz);
 
-function restartQuiz () {
-  highScoreEl.setAttribute("class", "hide");
-  questionScreenEl.removeAttribute("class", "hide");
-  //
-}
+restartBtnEl.addEventListener("click", startQuiz);
